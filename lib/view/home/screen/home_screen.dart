@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:patient/config/routes/app_routes.dart';
 import 'package:patient/core/utils/app_colors.dart';
+import 'package:patient/core/utils/navigator_extension.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,7 +33,11 @@ class HomeScreen extends StatelessWidget {
                     child: CustomButton(label: "New Patient", onPress: () {})),
                 20.horizontalSpace,
                 Expanded(
-                    child: CustomButton(label: "List all patient", onPress: () {})),
+                    child: CustomButton(
+                        label: "List all patient",
+                        onPress: () {
+                          context.pushNamed(Routes.patientList);
+                        })),
               ],
             )
           ],

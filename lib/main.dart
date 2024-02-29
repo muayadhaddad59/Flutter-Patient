@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/config/routes/app_routes.dart';
 import 'package:patient/config/theme/app_theme.dart';
+import 'package:patient/core/utils/app_service.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(const MyApp());
 }
 
