@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:patient/view/home/screen/home_screen.dart';
+
+import 'package:patient/view/navBar/nav_bar.dart';
 
 class Routes {
   static const String init = "/";
@@ -16,7 +17,7 @@ class AppRoutes {
       case Routes.init:
         return MaterialPageRoute(
           builder: (context) {
-            return const HomeScreen();
+            return const NavBar();
           },
         );
 

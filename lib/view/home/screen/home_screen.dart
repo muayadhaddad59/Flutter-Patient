@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                     child: CustomButton(label: "New Patient", onPress: () {})),
                 20.horizontalSpace,
                 Expanded(
-                    child: CustomButton(label: "New Patient", onPress: () {})),
+                    child: CustomButton(label: "List all patient", onPress: () {})),
               ],
             )
           ],
