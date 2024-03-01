@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 import 'package:patient/core/utils/app_colors.dart';
 import 'package:patient/data/patient/model/patient_model.dart';
-import 'package:patient/provider/cubit/patient/patient_cubit.dart';
+import 'package:patient/provider/patinetcubit/patient/patient_cubit.dart';
+
 
 class ListPatientScreen extends StatefulWidget {
   const ListPatientScreen({super.key});

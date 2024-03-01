@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:patient/core/utils/app_service.dart';
 import 'package:patient/core/utils/helper_method.dart';
 
 import 'package:patient/core/utils/navigator_extension.dart';
 import 'package:patient/data/patient/model/patient_model.dart';
-import 'package:patient/provider/cubit/patient_edit/patient_edit_cubit.dart';
+import 'package:patient/provider/clinicalCubit/clinical_edit/clinical_edit_cubit.dart';
+
+import 'package:patient/provider/patinetcubit/patient_edit/patient_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 import 'package:patient/view/patient/screen/clinical_test_screen.dart';
 import 'package:toastification/toastification.dart';
@@ -81,7 +84,12 @@ class InsuranceInfoState extends State<InsuranceInfo> {
                       HelperMethod.showToast(context,
                           title: const Text("Created Successfully"),
                           type: ToastificationType.success);
-                      context.push(const ClinicalTestScreen());
+                      context.push(BlocProvider(
+                        create: (context) => sl<ClinicalEditCubit>(),
+                        child: ClinicalTestScreen(
+                          pID: state.model?.sId ?? "",
+                        ),
+                      ));
                     }
                     if (state is PatientEditErrorState) {
                       context.loaderOverlay.hide();
@@ -95,7 +103,6 @@ class InsuranceInfoState extends State<InsuranceInfo> {
                       onPress: () {
                         // print(widget.model.firstName);
                         final model = widget.model.copyFrom(PatientDataModel(
-
                             insuranceProvider:
                                 _insuranceProviderController.text,
                             insuranceIdNumber: _insuranceIdController.text,

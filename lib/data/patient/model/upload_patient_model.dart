@@ -1,4 +1,7 @@
-
 class ResponseUploadPatientModel {
-  ResponseUploadPatientModel.fromJson(Map<String, dynamic> json);
+  String? sId;
+  ResponseUploadPatientModel({this.sId});
+  ResponseUploadPatientModel.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+  }
 }

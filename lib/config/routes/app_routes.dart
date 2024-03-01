@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:patient/core/utils/app_service.dart';
-import 'package:patient/provider/cubit/patient/patient_cubit.dart';
+import 'package:patient/provider/patinetcubit/patient/patient_cubit.dart';
+
 import 'package:patient/view/navBar/nav_bar.dart';
 import 'package:patient/view/patient/screen/patinet_info_screen.dart';
 import 'package:patient/view/patient/screen/list_patient_screen.dart';

@@ -3,5 +3,6 @@ class EndPoints {
   static const String customerUrl = '$baseUrl/customers';
   static const String adminUrl = '$baseUrl/admins';
   static const String patient = '$baseUrl/patients';
+  static const String clinical = '$baseUrl/patients';
 
 }

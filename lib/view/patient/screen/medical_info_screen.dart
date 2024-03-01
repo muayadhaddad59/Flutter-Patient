@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/core/utils/app_service.dart';
-
 import 'package:patient/core/utils/navigator_extension.dart';
 import 'package:patient/data/patient/model/patient_model.dart';
-import 'package:patient/provider/cubit/patient_edit/patient_edit_cubit.dart';
+import 'package:patient/provider/patinetcubit/patient_edit/patient_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 import 'package:patient/view/patient/screen/insurance_emrgency_info_screen.dart';
 

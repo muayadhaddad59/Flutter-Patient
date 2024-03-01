@@ -11,7 +11,11 @@ class PatientEditInitial extends PatientEditState {}
 
 class PatientEditIsLoadingState extends PatientEditState {}
 
-class PatientEditSuccessState extends PatientEditState {}
+class PatientEditSuccessState extends PatientEditState {
+  final ResponseUploadPatientModel? model;
+
+  const PatientEditSuccessState({this.model});
+}
 
 class PatientEditErrorState extends PatientEditState {
   final String message;
