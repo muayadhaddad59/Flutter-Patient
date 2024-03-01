@@ -50,21 +50,21 @@ class _NavBarState extends State<NavBar> {
               selectedColor: Colors.white,
             ),
 
-            /// Favourite
+            /// critical patients
             CrystalNavigationBarItem(
-              icon: IconlyBold.heart,
-              unselectedIcon: IconlyLight.heart,
+              icon: IconlyBold.danger,
+              unselectedIcon: IconlyLight.danger,
               selectedColor: Colors.red,
             ),
 
-            /// Add
+            /// add new patient
             CrystalNavigationBarItem(
               icon: IconlyBold.plus,
               unselectedIcon: IconlyLight.plus,
               selectedColor: Colors.white,
             ),
 
-            /// Profile
+            /// list all patients
             CrystalNavigationBarItem(
               icon: IconlyBold.user_2,
               unselectedIcon: IconlyLight.user,
