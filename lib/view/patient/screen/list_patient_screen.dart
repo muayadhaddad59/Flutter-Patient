@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 import 'package:patient/core/utils/app_colors.dart';
+import 'package:patient/core/utils/navigator_extension.dart';
 import 'package:patient/data/patient/model/patient_model.dart';
 import 'package:patient/provider/patinetcubit/patient/patient_cubit.dart';
-
+import 'package:patient/view/patient/screen/patien_details.dart';
 
 class ListPatientScreen extends StatefulWidget {
   const ListPatientScreen({super.key});
@@ -101,6 +102,9 @@ class _ListPatientScreenState extends State<ListPatientScreen> {
       itemBuilder: (context, index) {
         final model = searchResults[index];
         return ListTile(
+          onTap: () {
+            context.push(PatientDetailsScreen(patientData: model));
+          },
           leading: Icon(
             IconlyLight.profile,
             color: AppColors.primary,
