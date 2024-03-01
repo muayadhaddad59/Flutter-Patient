@@ -4,11 +4,16 @@ import 'package:patient/core/utils/app_service.dart';
 import 'package:patient/provider/cubit/patient/patient_cubit.dart';
 
 import 'package:patient/view/navBar/nav_bar.dart';
+import 'package:patient/view/patient/screen/medical_info_screen.dart';
+import 'package:patient/view/patient/screen/patinet_info_screen.dart';
 import 'package:patient/view/patient/screen/list_patient_screen.dart';
 
 class Routes {
   static const String init = "/";
   static const String patientList = "/patientList";
+  static const String addPatient = "/addPatientScreen";
+  static const String addMedicalInfoScreen = "/addMedicalInfoScreen";
+
   static const String forgetPassword = "/forgetPassword";
   static const String mainScren = "/mainScreen";
   static const String login = "/login";
@@ -33,7 +38,18 @@ class AppRoutes {
             );
           },
         );
-
+      case Routes.addPatient:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const AddPatientScreen();
+          },
+        );
+      case Routes.addMedicalInfoScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MedicalInfoScreen();
+          },
+        );
       default:
     }
     return null;

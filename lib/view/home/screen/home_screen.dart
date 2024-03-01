@@ -30,7 +30,11 @@ class HomeScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                    child: CustomButton(label: "New Patient", onPress: () {})),
+                    child: CustomButton(
+                        label: "New Patient",
+                        onPress: () {
+                          context.pushNamed(Routes.addPatient);
+                        })),
                 20.horizontalSpace,
                 Expanded(
                     child: CustomButton(

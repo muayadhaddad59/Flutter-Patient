@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/core/utils/app_colors.dart';
 import 'package:patient/core/utils/app_string.dart';
 
@@ -6,12 +7,10 @@ class AppTheme {
   static ThemeData appTheme() {
     return ThemeData(
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.bg,
-      ),
-      textSelectionTheme:
-          const TextSelectionThemeData(cursorColor: Colors.grey),
-      primaryTextTheme: Typography(platform: TargetPlatform.iOS).black,
-      textTheme: Typography(platform: TargetPlatform.iOS).black,
+          backgroundColor: AppColors.primary,
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle:
+              TextStyle(color: Colors.white, fontFamily: "", fontSize: 17.sp)),
       scaffoldBackgroundColor: AppColors.bg,
       brightness: Brightness.light,
       primaryColor: AppColors.primary,

@@ -10,12 +10,11 @@ class ListPatientScreen extends StatefulWidget {
   const ListPatientScreen({super.key});
 
   @override
-  State<ListPatientScreen> createState() => _ListPatientScreenState();
+  _ListPatientScreenState createState() => _ListPatientScreenState();
 }
 
 class _ListPatientScreenState extends State<ListPatientScreen> {
   List<PatientDataModel> data = [];
-
   List<PatientDataModel> searchResults = [];
 
   void onQueryChanged(String query) {
@@ -42,10 +41,12 @@ class _ListPatientScreenState extends State<ListPatientScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(0.0).w,
+        padding: EdgeInsets.all(16.w),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _textFiled(),
+            _buildSearchTextField(),
+            SizedBox(height: 16.h),
             Expanded(
               child: BlocListener<PatientCubit, PatientState>(
                 listener: (context, state) {
@@ -59,47 +60,55 @@ class _ListPatientScreenState extends State<ListPatientScreen> {
                       return const Center(child: CircularProgressIndicator());
                     }
                     if (state is PatientLoadedState) {
-                      final dataAPi = state.model.model;
-                      data = dataAPi ?? [];
-
-                      return ListView.separated(
-                          itemBuilder: (context, index) {
-                            final model = searchResults[index];
-                            return ListTile(
-                              leading: Icon(
-                                IconlyLight.profile,
-                                color: AppColors.primary,
-                              ),
-                              title:
-                                  Text("${model.firstName} ${model.lastName}"),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              10.verticalSpace,
-                          itemCount: searchResults.length);
+                      final dataAPI = state.model.model;
+                      data = dataAPI ?? [];
+                      return _buildPatientList();
                     }
-                    if (state is PatientErrorState) {}
+                    if (state is PatientErrorState) {
+                      return const Center(
+                          child: Text("Error loading patients"));
+                    }
                     return const SizedBox();
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  TextField _textFiled() {
+  Widget _buildSearchTextField() {
     return TextField(
       onChanged: onQueryChanged,
       decoration: InputDecoration(
-          hintText: "Search for a patient...",
-          fillColor: AppColors.bg,
-          filled: true,
-          prefixIcon: const Icon(Icons.search),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade300))),
+        hintText: "Search for a patient...",
+        fillColor: AppColors.bg,
+        filled: true,
+        prefixIcon: const Icon(Icons.search),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPatientList() {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        final model = searchResults[index];
+        return ListTile(
+          leading: Icon(
+            IconlyLight.profile,
+            color: AppColors.primary,
+          ),
+          title: Text("${model.firstName} ${model.lastName}"),
+        );
+      },
+      separatorBuilder: (context, index) => SizedBox(height: 10.h),
+      itemCount: searchResults.length,
     );
   }
 }
