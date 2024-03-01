@@ -4,34 +4,31 @@ import 'package:patient/config/routes/app_routes.dart';
 import 'package:patient/core/utils/navigator_extension.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 
-class MedicalInfoScreen extends StatefulWidget {
-  const MedicalInfoScreen({super.key});
+class InsuranceInfo extends StatefulWidget {
+  const InsuranceInfo({super.key});
 
   @override
-  State<MedicalInfoScreen> createState() => _MedicalInfoScreenState();
+  State<InsuranceInfo> createState() => InsuranceInfoState();
 }
 
-class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
-  final TextEditingController _purposeOfVisitController =
+class InsuranceInfoState extends State<InsuranceInfo> {
+  final TextEditingController _insuranceProviderController =
       TextEditingController();
-  final TextEditingController _primaryCarePhysicianController =
+  final TextEditingController _insuranceIdController = TextEditingController();
+  final TextEditingController _insuranceContactNumberController =
       TextEditingController();
-  final TextEditingController _contactNumberController =
+  final TextEditingController _emergencyContactPersonController =
       TextEditingController();
-  final TextEditingController _allergiesController = TextEditingController();
-  final TextEditingController _currentMedicationsController =
-      TextEditingController();
-  final TextEditingController _medicalConditionController =
+  final TextEditingController _emergencyContactNumberController =
       TextEditingController();
 
   @override
   void dispose() {
-    _purposeOfVisitController.dispose();
-    _primaryCarePhysicianController.dispose();
-    _contactNumberController.dispose();
-    _allergiesController.dispose();
-    _currentMedicationsController.dispose();
-    _medicalConditionController.dispose();
+    _insuranceProviderController.dispose();
+    _insuranceIdController.dispose();
+    _insuranceContactNumberController.dispose();
+    _emergencyContactPersonController.dispose();
+    _emergencyContactNumberController.dispose();
     super.dispose();
   }
 
@@ -39,7 +36,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Medical Info"),
+        title: const Text("Insurance Info"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -47,28 +44,28 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildSectionTitle("Visit Information"),
-              const SizedBox(height: 10),
-              _buildTextField("Purpose of Visit", _purposeOfVisitController),
+              _buildSectionTitle("Insurance Information"),
               const SizedBox(height: 10),
               _buildTextField(
-                  "Primary Care Physician", _primaryCarePhysicianController),
+                  "Insurance Provider", _insuranceProviderController),
               const SizedBox(height: 10),
-              _buildTextField("Contact Number", _contactNumberController),
+              _buildTextField("Insurance ID Number", _insuranceIdController),
+              const SizedBox(height: 10),
+              _buildTextField("Insurance Contact Number",
+                  _insuranceContactNumberController),
               const SizedBox(height: 20),
-              _buildSectionTitle("Medical History"),
+              _buildSectionTitle("Emergency Contact Details"),
               const SizedBox(height: 10),
-              _buildTextField("Allergies", _allergiesController),
+              _buildTextField("Emergency Contact Person",
+                  _emergencyContactPersonController),
               const SizedBox(height: 10),
-              _buildTextField(
-                  "Current Medications", _currentMedicationsController),
-              const SizedBox(height: 10),
-              _buildTextField("Medical Condition", _medicalConditionController),
+              _buildTextField("Emergency Contact Number",
+                  _emergencyContactNumberController),
               20.verticalSpace,
               CustomButton(
                   label: "Save",
                   onPress: () {
-                    context.pushNamed(Routes.addInsuranceInfo);
+                    context.pushNamed(Routes.addMedicalInfoScreen);
                   }),
               20.verticalSpace,
             ],
