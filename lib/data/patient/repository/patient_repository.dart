@@ -8,8 +8,8 @@ import '../../../../core/error/failures.dart';
 
 abstract class PatientRepository {
   Future<Either<Failure, PatientModel>> get();
-  Future<Either<Failure, ResponseUploadPatientModel>> add(UploadPatientModel model);
-  Future<Either<Failure, Unit>> update(UploadPatientModel model);
+  Future<Either<Failure, ResponseUploadPatientModel>> add(PatientDataModel model);
+  Future<Either<Failure, Unit>> update(PatientDataModel model);
   Future<Either<Failure, Unit>> delete(int id);
 }
 
@@ -35,7 +35,7 @@ class PatientRepositoryImpl implements PatientRepository {
 
 
   @override
-  Future<Either<Failure, ResponseUploadPatientModel>> add(UploadPatientModel model) async {
+  Future<Either<Failure, ResponseUploadPatientModel>> add(PatientDataModel model) async {
     if (await networkInfo.isConnected) {
       try {
         final reposnse = await remoteDatasource.add(model);
@@ -57,7 +57,7 @@ class PatientRepositoryImpl implements PatientRepository {
 
 
   @override
-  Future<Either<Failure, Unit>> update(UploadPatientModel model) async {
+  Future<Either<Failure, Unit>> update(PatientDataModel model) async {
       if (await networkInfo.isConnected) {
       try {
         final reposnse = await remoteDatasource.update(model);

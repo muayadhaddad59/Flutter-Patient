@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:patient/config/routes/app_routes.dart';
+import 'package:patient/core/utils/app_service.dart';
+
 import 'package:patient/core/utils/navigator_extension.dart';
+import 'package:patient/data/patient/model/patient_model.dart';
+import 'package:patient/provider/cubit/patient_edit/patient_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
+import 'package:patient/view/patient/screen/insurance_emrgency_info_screen.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
-  const MedicalInfoScreen({super.key});
+  final PatientDataModel model;
+  const MedicalInfoScreen({super.key, required this.model});
 
   @override
   State<MedicalInfoScreen> createState() => _MedicalInfoScreenState();
@@ -66,9 +72,22 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
               _buildTextField("Medical Condition", _medicalConditionController),
               20.verticalSpace,
               CustomButton(
-                  label: "Save",
+                  label: "Next",
                   onPress: () {
-                    context.pushNamed(Routes.addInsuranceInfo);
+                    final model = widget.model.copyFrom(PatientDataModel(
+                        purposeOfVisit: _purposeOfVisitController.text,
+                        primaryCarePhysician:
+                            _primaryCarePhysicianController.text,
+                        contactNumber: _contactNumberController.text,
+                        listOfAllergies: _allergiesController.text,
+                        currentMedications: _currentMedicationsController.text,
+                        medicalConditions: _medicalConditionController.text));
+
+                    context.push(BlocProvider(
+                      create: (context) =>
+                          sl<PatientEditCubit>(),
+                      child: InsuranceInfo(model: model),
+                    ));
                   }),
               20.verticalSpace,
             ],

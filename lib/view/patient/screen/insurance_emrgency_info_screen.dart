@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:patient/config/routes/app_routes.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:patient/core/utils/helper_method.dart';
+
 import 'package:patient/core/utils/navigator_extension.dart';
+import 'package:patient/data/patient/model/patient_model.dart';
+import 'package:patient/provider/cubit/patient_edit/patient_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
+import 'package:patient/view/patient/screen/clinical_test_screen.dart';
+import 'package:toastification/toastification.dart';
 
 class InsuranceInfo extends StatefulWidget {
-  const InsuranceInfo({super.key});
+  final PatientDataModel model;
+  const InsuranceInfo({super.key, required this.model});
 
   @override
   State<InsuranceInfo> createState() => InsuranceInfoState();
@@ -34,41 +42,75 @@ class InsuranceInfoState extends State<InsuranceInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Insurance Info"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildSectionTitle("Insurance Information"),
-              const SizedBox(height: 10),
-              _buildTextField(
-                  "Insurance Provider", _insuranceProviderController),
-              const SizedBox(height: 10),
-              _buildTextField("Insurance ID Number", _insuranceIdController),
-              const SizedBox(height: 10),
-              _buildTextField("Insurance Contact Number",
-                  _insuranceContactNumberController),
-              const SizedBox(height: 20),
-              _buildSectionTitle("Emergency Contact Details"),
-              const SizedBox(height: 10),
-              _buildTextField("Emergency Contact Person",
-                  _emergencyContactPersonController),
-              const SizedBox(height: 10),
-              _buildTextField("Emergency Contact Number",
-                  _emergencyContactNumberController),
-              20.verticalSpace,
-              CustomButton(
-                  label: "Save",
-                  onPress: () {
-                    context.pushNamed(Routes.addMedicalInfoScreen);
-                  }),
-              20.verticalSpace,
-            ],
+    return HelperMethod.loader(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Insurance Info"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildSectionTitle("Insurance Information"),
+                const SizedBox(height: 10),
+                _buildTextField(
+                    "Insurance Provider", _insuranceProviderController),
+                const SizedBox(height: 10),
+                _buildTextField("Insurance ID Number", _insuranceIdController),
+                const SizedBox(height: 10),
+                _buildTextField("Insurance Contact Number",
+                    _insuranceContactNumberController),
+                const SizedBox(height: 20),
+                _buildSectionTitle("Emergency Contact Details"),
+                const SizedBox(height: 10),
+                _buildTextField("Emergency Contact Person",
+                    _emergencyContactPersonController),
+                const SizedBox(height: 10),
+                _buildTextField("Emergency Contact Number",
+                    _emergencyContactNumberController),
+                20.verticalSpace,
+                BlocListener<PatientEditCubit, PatientEditState>(
+                  listener: (context, state) {
+                    if (state is PatientEditIsLoadingState) {
+                      context.loaderOverlay.show();
+                    }
+                    if (state is PatientEditSuccessState) {
+                      context.loaderOverlay.hide();
+                      HelperMethod.showToast(context,
+                          title: const Text("Created Successfully"),
+                          type: ToastificationType.success);
+                      context.push(const ClinicalTestScreen());
+                    }
+                    if (state is PatientEditErrorState) {
+                      context.loaderOverlay.hide();
+                      HelperMethod.showToast(context,
+                          title: Text(state.message),
+                          type: ToastificationType.error);
+                    }
+                  },
+                  child: CustomButton(
+                      label: "Save & Add Clincal Test",
+                      onPress: () {
+                        // print(widget.model.firstName);
+                        final model = widget.model.copyFrom(PatientDataModel(
+
+                            insuranceProvider:
+                                _insuranceProviderController.text,
+                            insuranceIdNumber: _insuranceIdController.text,
+                            insuranceContactNumber:
+                                _insuranceContactNumberController.text,
+                            emergencyContactPerson:
+                                _emergencyContactPersonController.text,
+                            emergencyContactNumber:
+                                _emergencyContactNumberController.text));
+                        context.read<PatientEditCubit>().addPatient(model);
+                      }),
+                ),
+                20.verticalSpace,
+              ],
+            ),
           ),
         ),
       ),

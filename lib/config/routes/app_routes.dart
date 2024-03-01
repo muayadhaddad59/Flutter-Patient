@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:patient/core/utils/app_service.dart';
 import 'package:patient/provider/cubit/patient/patient_cubit.dart';
-
 import 'package:patient/view/navBar/nav_bar.dart';
-import 'package:patient/view/patient/screen/insurance_emrgency_info_screen.dart';
-import 'package:patient/view/patient/screen/medical_info_screen.dart';
 import 'package:patient/view/patient/screen/patinet_info_screen.dart';
 import 'package:patient/view/patient/screen/list_patient_screen.dart';
 
@@ -15,6 +12,7 @@ class Routes {
   static const String addPatient = "/addPatientScreen";
   static const String addMedicalInfoScreen = "/addMedicalInfoScreen";
   static const String addInsuranceInfo = "/addInsuranceInfo";
+  static const String addClinicalTestScreen = "/addClinicalTestScreen";
 
   static const String forgetPassword = "/forgetPassword";
   static const String mainScren = "/mainScreen";
@@ -46,19 +44,7 @@ class AppRoutes {
             return const AddPatientScreen();
           },
         );
-      case Routes.addMedicalInfoScreen:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const MedicalInfoScreen();
-          },
-        );
 
-      case Routes.addInsuranceInfo:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const InsuranceInfo();
-          },
-        );
       default:
     }
     return null;

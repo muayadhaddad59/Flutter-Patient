@@ -133,6 +133,43 @@ class PatientDataModel {
     data['is_patient_critical'] = isPatientCritical;
     return data;
   }
+
+  PatientDataModel copyFrom(PatientDataModel other) {
+    return PatientDataModel(
+      sId: other.sId ?? sId,
+      firstName: other.firstName ?? firstName,
+      lastName: other.lastName ?? lastName,
+      dateOfBirth: other.dateOfBirth ?? dateOfBirth,
+      age: other.age ?? age,
+      gender: other.gender ?? gender,
+      height: other.height ?? height,
+      weight: other.weight ?? weight,
+      address: other.address ?? address,
+      city: other.city ?? city,
+      province: other.province ?? province,
+      postalCode: other.postalCode ?? postalCode,
+      contactNumber: other.contactNumber ?? contactNumber,
+      email: other.email ?? email,
+      identification: other.identification ?? identification,
+      identificationType: other.identificationType ?? identificationType,
+      purposeOfVisit: other.purposeOfVisit ?? purposeOfVisit,
+      primaryCarePhysician: other.primaryCarePhysician ?? primaryCarePhysician,
+      physicianContactNumber: other.physicianContactNumber ?? physicianContactNumber,
+      listOfAllergies: other.listOfAllergies ?? listOfAllergies,
+      currentMedications: other.currentMedications ?? currentMedications,
+      medicalConditions: other.medicalConditions ?? medicalConditions,
+      insuranceProvider: other.insuranceProvider ?? insuranceProvider,
+      insuranceIdNumber: other.insuranceIdNumber ?? insuranceIdNumber,
+      insuranceContactNumber: other.insuranceContactNumber ?? insuranceContactNumber,
+      emergencyContactPerson: other.emergencyContactPerson ?? emergencyContactPerson,
+      emergencyContactNumber: other.emergencyContactNumber ?? emergencyContactNumber,
+      createdAt: other.createdAt ?? createdAt,
+      updatedAt: other.updatedAt ?? updatedAt,
+      iV: other.iV ?? iV,
+      isPatientCritical: other.isPatientCritical ?? isPatientCritical,
+    );
+  }
+
 }
 class PatientModel {
   List<PatientDataModel>? model;
@@ -142,4 +179,5 @@ class PatientModel {
   PatientModel.fromJson(List<dynamic> json) {
     model = json.map((e) => PatientDataModel.fromJson(e)).toList();
   }
+  
 }

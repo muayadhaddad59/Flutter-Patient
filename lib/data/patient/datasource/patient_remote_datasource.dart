@@ -10,8 +10,8 @@ import '../model/upload_patient_model.dart';
 
 abstract class PatientRemoteDataSource {
   Future<PatientModel> get();
-  Future<ResponseUploadPatientModel> add(UploadPatientModel model);
-  Future<Unit> update(UploadPatientModel model);
+  Future<ResponseUploadPatientModel> add(PatientDataModel model);
+  Future<Unit> update(PatientDataModel model);
   Future<Unit> delete(int id);
 }
 
@@ -38,9 +38,9 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
   }
 
   @override
-  Future<ResponseUploadPatientModel> add(UploadPatientModel model) async{
+  Future<ResponseUploadPatientModel> add(PatientDataModel model) async{
      final response = await apiConsumer
-        .post(EndPoints.patient);
+        .post(EndPoints.patient,body: model.toJson());
     if (response.statusCode == 201 || response.statusCode == 200) {
       try {
         final ResponseUploadPatientModel decodedJson =
@@ -66,7 +66,7 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
   }
 
   @override
-  Future<Unit> update(UploadPatientModel model) async{
+  Future<Unit> update(PatientDataModel model) async{
   final response = await apiConsumer
         .put(EndPoints.patient);
     if (response.statusCode == 201 || response.statusCode == 200) {

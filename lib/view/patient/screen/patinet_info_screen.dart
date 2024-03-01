@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:patient/config/routes/app_routes.dart';
+
 import 'package:patient/core/utils/navigator_extension.dart';
+import 'package:patient/data/patient/model/patient_model.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
+import 'package:patient/view/patient/screen/medical_info_screen.dart';
 
 class AddPatientScreen extends StatefulWidget {
   const AddPatientScreen({super.key});
@@ -128,9 +130,24 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
               _buildTextField(label: "ID Number", controller: _idNumberCtrl),
               SizedBox(height: 20.h),
               CustomButton(
-                  label: "Save",
+                  label: "Next",
                   onPress: () {
-                    context.pushNamed(Routes.addMedicalInfoScreen);
+                    final model = PatientDataModel(
+                        firstName: _firstNameCtrl.text,
+                        lastName: _lastNameCtrl.text,
+                        dateOfBirth: _dobCtrl.text,
+                        age: int.parse(_ageCtrl.text),
+                        gender: _genderCtrl.text,
+                        height: int.tryParse(_heightCtrl.text),
+                        weight: int.parse(_weightCtrl.text),
+                        province: _provinceCtrl.text,
+                        postalCode: _postalCodeCtrl.text,
+                        contactNumber: _contactNumberCtrl.text,
+                        email: _emailCtrl.text,
+                        identification: _idNumberCtrl.text);
+                    context.push(MedicalInfoScreen(
+                      model: model,
+                    ));
                   }),
               SizedBox(height: 20.h),
             ],

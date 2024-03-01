@@ -1,6 +1,7 @@
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:patient/core/utils/app_colors.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 
 enum _SelectedTab { home, favorite, add, search }
@@ -39,7 +40,7 @@ class _NavBarState extends State<NavBar> {
           height: 10,
           // indicatorColor: Colors.blue,
           unselectedItemColor: Colors.white70,
-          backgroundColor: Colors.black.withOpacity(0.1),
+          backgroundColor: AppColors.primary,
           onTap: _handleIndexChanged,
           items: [
             /// Home
