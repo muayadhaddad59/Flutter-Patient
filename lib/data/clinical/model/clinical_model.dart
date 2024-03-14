@@ -48,7 +48,7 @@ class ClinicalDataModel {
     data['respiratory_rate'] = respiratoryRate;
     data['blood_oxygen_level'] = bloodOxygenLevel;
     data['pulse_rate'] = pulseRate;
-    data['is_critical_condition'] = isCriticalCondition;
+    // data['is_critical_condition'] = isCriticalCondition;
     return data;
   }
 }

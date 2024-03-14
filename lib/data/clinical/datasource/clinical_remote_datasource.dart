@@ -68,9 +68,15 @@ class ClinicalRemoteDataSourceImpl implements ClinicalRemoteDataSource {
 
   @override
   Future<Unit> update(ClinicalDataModel model) async {
-    final response = await apiConsumer.put(EndPoints.clinical);
+    final response = await apiConsumer.post(
+        "${EndPoints.clinical}/${model.patientId}/clinicaldata",
+        body: model.toJson());
     if (response.statusCode == 201 || response.statusCode == 200) {
-      return Future.value(unit);
+      try {
+        return Future.value(unit);
+      } catch (e) {
+        throw const FetchDataException();
+      }
     } else {
       throw const ServerException();
     }

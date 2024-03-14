@@ -96,13 +96,18 @@ class _ListPatientScreenState extends State<ListPatientScreen> {
   }
 
   Widget _buildPatientList() {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        final model = searchResults[index];
-        return PatientCard(model: model);
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<PatientCubit>().getPatient();
       },
-      separatorBuilder: (context, index) => SizedBox(height: 10.h),
-      itemCount: searchResults.length,
+      child: ListView.separated(
+        itemBuilder: (context, index) {
+          final model = searchResults[index];
+          return PatientCard(model: model);
+        },
+        separatorBuilder: (context, index) => SizedBox(height: 10.h),
+        itemCount: searchResults.length,
+      ),
     );
   }
 }

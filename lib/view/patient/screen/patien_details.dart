@@ -6,6 +6,7 @@ import 'package:patient/core/utils/navigator_extension.dart';
 import 'package:patient/data/clinical/model/clinical_model.dart';
 import 'package:patient/data/patient/model/patient_model.dart';
 import 'package:patient/provider/clinicalCubit/clinical/clinical_cubit.dart';
+import 'package:patient/provider/clinicalCubit/clinical_edit/clinical_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 import 'package:patient/view/patient/screen/clinical_details_screen.dart';
 
@@ -71,10 +72,17 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                   size: Size(0.9.sw, 45.sp),
                   label: "View Clinical Details",
                   onPress: () {
-                    context.push(BlocProvider(
-                      create: (context) => sl<ClinicalCubit>()
-                        ..getClinical(
-                            ClinicalDataModel(sId: _editedPatientData.sId)),
+                    context.push(MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (context) => sl<ClinicalCubit>()
+                            ..getClinical(
+                                ClinicalDataModel(sId: _editedPatientData.sId)),
+                        ),
+                        BlocProvider(
+                          create: (context) => sl<ClinicalEditCubit>(),
+                        ),
+                      ],
                       child: const ClinicalDetailsInfo(),
                     ));
                   }),

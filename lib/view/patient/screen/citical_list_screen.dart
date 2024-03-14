@@ -12,7 +12,7 @@ class CriticalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(""),
+        title: const Text("Critical patient"),
       ),
       body: BlocBuilder<ClinicalCubit, ClinicalState>(
         builder: (context, state) {
@@ -21,11 +21,16 @@ class CriticalList extends StatelessWidget {
           }
           if (state is ClinicalListLoadedState) {
             final data = state.model.model;
-            return ListView.separated(
-                itemBuilder: (context, index) =>
-                    PatientCard(model: data?[index] ?? PatientDataModel()),
-                separatorBuilder: (context, index) => 10.verticalSpace,
-                itemCount: state.model.model?.length ?? 0);
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<ClinicalCubit>().getListCritical();
+              },
+              child: ListView.separated(
+                  itemBuilder: (context, index) =>
+                      PatientCard(model: data?[index] ?? PatientDataModel()),
+                  separatorBuilder: (context, index) => 10.verticalSpace,
+                  itemCount: state.model.model?.length ?? 0),
+            );
           }
           if (state is ClinicalErrorState) {}
           return const SizedBox();
