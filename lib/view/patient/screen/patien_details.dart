@@ -69,7 +69,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
               20.verticalSpace,
               CustomButton(
                   size: Size(0.9.sw, 45.sp),
-                  label: "Clinicl Details",
+                  label: "View Clinical Details",
                   onPress: () {
                     context.push(BlocProvider(
                       create: (context) => sl<ClinicalCubit>()

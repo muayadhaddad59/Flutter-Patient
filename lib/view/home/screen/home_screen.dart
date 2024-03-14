@@ -4,6 +4,7 @@ import 'package:patient/config/routes/app_routes.dart';
 import 'package:patient/core/utils/app_colors.dart';
 import 'package:patient/core/utils/navigator_extension.dart';
 
+//app home screen with search, nav bar, list, and add new patient option
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Patient Care",
+          "WeCare Patient Management",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primary,
@@ -73,7 +74,7 @@ class HomeScreen extends StatelessWidget {
         style: TextStyle(color: AppColors.primary, fontSize: 22.sp),
         children: const [
           TextSpan(
-              text: "\nClinc Staff!",
+              text: "\nClinic Staff!",
               style: TextStyle(fontWeight: FontWeight.w700))
         ]));
   }
