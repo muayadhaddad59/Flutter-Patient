@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
+import 'package:patient/data/patient/model/patient_model.dart';
 import '../../../../core/api/api_consumer.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/api/end_points.dart';
@@ -10,6 +11,7 @@ import '../model/upload_clinical_model.dart';
 
 abstract class ClinicalRemoteDataSource {
   Future<ClinicalModel> get(ClinicalDataModel model);
+  Future<PatientModel> getList();
   Future<ResponseUploadClinicalModel> add(ClinicalDataModel model);
   Future<Unit> update(ClinicalDataModel model);
   Future<Unit> delete(int id);
@@ -69,6 +71,23 @@ class ClinicalRemoteDataSourceImpl implements ClinicalRemoteDataSource {
     final response = await apiConsumer.put(EndPoints.clinical);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Future.value(unit);
+    } else {
+      throw const ServerException();
+    }
+  }
+
+  @override
+  Future<PatientModel> getList() async {
+    final Response response =
+        await apiConsumer.get("${EndPoints.clinical}/critical");
+    if (response.statusCode == StatusCode.ok) {
+      try {
+        final PatientModel decodedJson =
+            PatientModel.fromJson(json.decode(response.data));
+        return decodedJson;
+      } catch (e) {
+        throw const FetchDataException();
+      }
     } else {
       throw const ServerException();
     }

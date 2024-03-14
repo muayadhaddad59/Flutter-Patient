@@ -43,18 +43,12 @@ class ClinicalDataModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
     data['bp_systolic'] = bpSystolic;
     data['bp_diastolic'] = bpDiastolic;
     data['respiratory_rate'] = respiratoryRate;
     data['blood_oxygen_level'] = bloodOxygenLevel;
     data['pulse_rate'] = pulseRate;
-    data['clinic_staff'] = clinicStaff;
-    data['patientId'] = patientId;
     data['is_critical_condition'] = isCriticalCondition;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['__v'] = iV;
     return data;
   }
 }

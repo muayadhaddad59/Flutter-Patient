@@ -11,6 +11,7 @@ import 'package:patient/data/clinical/repository/clinical_repository.dart';
 import 'package:patient/data/clinical/usecase/add_clinical_usecase.dart';
 import 'package:patient/data/clinical/usecase/delete_clinical_usecase.dart';
 import 'package:patient/data/clinical/usecase/get_clinical_usecase.dart';
+import 'package:patient/data/clinical/usecase/get_list_clinical_usecase.dart';
 import 'package:patient/data/clinical/usecase/update_clinical_usecase.dart';
 import 'package:patient/data/patient/datasource/patient_remote_datasource.dart';
 import 'package:patient/data/patient/repository/patient_repository.dart';
@@ -46,7 +47,7 @@ Future<void> init() async {
 // Patient::END
 
 // Clinical::START
-  sl.registerFactory(() => ClinicalCubit(get: sl()));
+  sl.registerFactory(() => ClinicalCubit(get: sl(),getList: sl()));
   sl.registerFactory(
       () => ClinicalEditCubit(add: sl(), update: sl(), delete: sl()));
 
@@ -54,6 +55,7 @@ Future<void> init() async {
       () => ClinicalRepositoryImpl(networkInfo: sl(), remoteDatasource: sl()));
 
   sl.registerLazySingleton(() => GetClinicalUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetListClinicalUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddClinicalUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteClinicalUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateClinicalUsecase(repository: sl()));

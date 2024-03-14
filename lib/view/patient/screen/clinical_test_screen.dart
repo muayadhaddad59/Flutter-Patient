@@ -88,6 +88,7 @@ class ClinicalTestScreenState extends State<ClinicalTestScreen> {
                       label: "Save",
                       onPress: () {
                         final model = ClinicalDataModel(
+                            isCriticalCondition: false,
                             patientId: widget.pID,
                             pulseRate: int.parse(_heartRateController.text),
                             respiratoryRate:

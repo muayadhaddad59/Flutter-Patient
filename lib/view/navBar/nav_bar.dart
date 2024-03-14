@@ -1,8 +1,12 @@
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:patient/core/utils/app_colors.dart';
+import 'package:patient/core/utils/app_service.dart';
+import 'package:patient/provider/clinicalCubit/clinical/clinical_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
+import 'package:patient/view/patient/screen/citical_list_screen.dart';
 
 enum _SelectedTab { home, favorite, add, search }
 
@@ -17,9 +21,10 @@ class _NavBarState extends State<NavBar> {
   var _selectedTab = _SelectedTab.home;
   final _screens = [
     const HomeScreen(),
-    const SizedBox(),
-    const SizedBox(),
-    const SizedBox()
+    BlocProvider(
+      create: (context) => sl<ClinicalCubit>()..getListCritical(),
+      child: const CriticalList(),
+    ),
   ];
 
   void _handleIndexChanged(int i) {
@@ -53,21 +58,6 @@ class _NavBarState extends State<NavBar> {
             /// Favourite
             CrystalNavigationBarItem(
               icon: IconlyBold.heart,
-              unselectedIcon: IconlyLight.heart,
-              selectedColor: Colors.red,
-            ),
-
-            /// Add
-            CrystalNavigationBarItem(
-              icon: IconlyBold.plus,
-              unselectedIcon: IconlyLight.plus,
-              selectedColor: Colors.white,
-            ),
-
-            /// Profile
-            CrystalNavigationBarItem(
-              icon: IconlyBold.user_2,
-              unselectedIcon: IconlyLight.user,
               selectedColor: Colors.white,
             ),
           ],

@@ -13,8 +13,14 @@ class ClinicalIsLoadingState extends ClinicalState {}
 
 class ClinicalLoadedState extends ClinicalState {
   final ClinicalModel model;
-  
+
   const ClinicalLoadedState({required this.model});
+}
+
+class ClinicalListLoadedState extends ClinicalState {
+  final PatientModel model;
+
+  const ClinicalListLoadedState({required this.model});
 }
 
 class ClinicalErrorState extends ClinicalState {
