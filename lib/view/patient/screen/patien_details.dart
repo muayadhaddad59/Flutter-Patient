@@ -8,7 +8,7 @@ import 'package:patient/data/patient/model/patient_model.dart';
 import 'package:patient/provider/clinicalCubit/clinical/clinical_cubit.dart';
 import 'package:patient/provider/clinicalCubit/clinical_edit/clinical_edit_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
-import 'package:patient/view/patient/screen/clinical_details_screen.dart';
+import 'package:patient/view/patient/screen/clinical_record_list_screen.dart';
 
 class PatientDetailsScreen extends StatefulWidget {
   final PatientDataModel patientData;
@@ -16,7 +16,7 @@ class PatientDetailsScreen extends StatefulWidget {
   const PatientDetailsScreen({super.key, required this.patientData});
 
   @override
-  _PatientDetailsScreenState createState() => _PatientDetailsScreenState();
+  State<PatientDetailsScreen> createState() => _PatientDetailsScreenState();
 }
 
 class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
@@ -83,7 +83,9 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                           create: (context) => sl<ClinicalEditCubit>(),
                         ),
                       ],
-                      child: const ClinicalDetailsInfo(),
+                      child: ClinicalRecordListScreen(
+                        patientID: _editedPatientData.sId.toString(),
+                      ),
                     ));
                   }),
             ],

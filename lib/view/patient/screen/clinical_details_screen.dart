@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/core/utils/helper_method.dart';
 import 'package:patient/data/clinical/model/clinical_model.dart';
-import 'package:patient/provider/clinicalCubit/clinical/clinical_cubit.dart';
-import 'package:patient/provider/clinicalCubit/clinical_edit/clinical_edit_cubit.dart';
-import 'package:patient/view/home/screen/home_screen.dart';
-import 'package:toastification/toastification.dart';
 
 class ClinicalDetailsInfo extends StatefulWidget {
-  const ClinicalDetailsInfo({super.key});
+  final ClinicalDataModel model;
+  const ClinicalDetailsInfo({super.key, required this.model});
 
   @override
   State<ClinicalDetailsInfo> createState() => _ClinicalDetailsInfoState();
@@ -27,111 +21,68 @@ class _ClinicalDetailsInfoState extends State<ClinicalDetailsInfo> {
   @override
   void initState() {
     super.initState();
-    bloodOxygenLevelCtrl = TextEditingController();
-    systolicBloodPressureCtrl = TextEditingController();
-    diastolicBloodPressureCtrl = TextEditingController();
-    respiratoryRateCtrl = TextEditingController();
-    pulseRateCtrl = TextEditingController();
-    criticalConditionCtrl = TextEditingController();
+    bloodOxygenLevelCtrl =
+        TextEditingController(text: widget.model.bloodOxygenLevel.toString());
+    systolicBloodPressureCtrl =
+        TextEditingController(text: widget.model.bpSystolic.toString());
+    diastolicBloodPressureCtrl =
+        TextEditingController(text: widget.model.bpDiastolic.toString());
+    respiratoryRateCtrl =
+        TextEditingController(text: widget.model.respiratoryRate.toString());
+    pulseRateCtrl =
+        TextEditingController(text: widget.model.pulseRate.toString());
+    criticalConditionCtrl = TextEditingController(
+        text: widget.model.isCriticalCondition.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return HelperMethod.loader(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Clinical Details"),
-        ),
-        body: BlocListener<ClinicalEditCubit, ClinicalEditState>(
-          listener: (context, state) {
-            if (state is ClinicalEditIsLoadingState) {
-              context.loaderOverlay.show();
-            }
-            if (state is ClinicalEditSuccessState) {
-              context.loaderOverlay.hide();
-              HelperMethod.showToast(context,
-                  title: const Text("Data updated successfully"),
-                  type: ToastificationType.success);
-            }
-            if (state is ClinicalEditErrorState) {
-              context.loaderOverlay.hide();
-              HelperMethod.showToast(context,
-                  title: Text(state.message), type: ToastificationType.error);
-            }
-          },
-          child: BlocBuilder<ClinicalCubit, ClinicalState>(
-            builder: (context, state) {
-              if (state is ClinicalIsLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is ClinicalLoadedState) {
-                final data = state.model.model?.first ?? ClinicalDataModel();
-                // Assign values from data to controllers
-                bloodOxygenLevelCtrl.text = data.bloodOxygenLevel.toString();
-                systolicBloodPressureCtrl.text = data.bpSystolic.toString();
-                diastolicBloodPressureCtrl.text = data.bpDiastolic.toString();
-                respiratoryRateCtrl.text = data.respiratoryRate.toString();
-                pulseRateCtrl.text = data.pulseRate.toString();
-                criticalConditionCtrl.text =
-                    data.isCriticalCondition.toString();
-
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        _buildDetailItem(
-                            "Blood Oxygen Level", bloodOxygenLevelCtrl),
-                        _buildDetailItem("Systolic Blood Pressure",
-                            systolicBloodPressureCtrl),
-                        _buildDetailItem("Diastolic Blood Pressure",
-                            diastolicBloodPressureCtrl),
-                        _buildDetailItem(
-                            "Respiratory Rate", respiratoryRateCtrl),
-                        _buildDetailItem("Pulse Rate", pulseRateCtrl),
-
-                        const SizedBox(height: 50), // Use SizedBox for spacing
-                        CustomButton(
-                          label: "Edit",
-                          onPress: () {
-                            context
-                                .read<ClinicalEditCubit>()
-                                .updateClinical(ClinicalDataModel(
-                                  patientId: data.patientId,
-                                  bpSystolic: int.tryParse(
-                                      systolicBloodPressureCtrl.text),
-                                  bpDiastolic: int.tryParse(
-                                      diastolicBloodPressureCtrl.text),
-                                  respiratoryRate:
-                                      int.tryParse(respiratoryRateCtrl.text),
-                                  bloodOxygenLevel:
-                                      int.tryParse(bloodOxygenLevelCtrl.text),
-                                  pulseRate: int.tryParse(pulseRateCtrl.text),
-                                  isCriticalCondition:
-                                      criticalConditionCtrl.text == "true"
-                                          ? true
-                                          : false,
-                                ));
-                          },
-                          size: Size(0.8.sw, 40.sp),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-              if (state is ClinicalErrorState) {
-                return Center(
-                  child: Text("Error: ${state.message}"),
-                );
-              }
-              return const SizedBox();
-            },
+          appBar: AppBar(
+            title: const Text("Clinical Details"),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildDetailItem("Blood Oxygen Level", bloodOxygenLevelCtrl),
+                  _buildDetailItem(
+                      "Systolic Blood Pressure", systolicBloodPressureCtrl),
+                  _buildDetailItem(
+                      "Diastolic Blood Pressure", diastolicBloodPressureCtrl),
+                  _buildDetailItem("Respiratory Rate", respiratoryRateCtrl),
+                  _buildDetailItem("Pulse Rate", pulseRateCtrl),
+
+                  const SizedBox(height: 50), // Use SizedBox for spacing
+                  // CustomButton(
+                  //   label: "Edit",
+                  //   onPress: () {
+                  //     context
+                  //         .read<ClinicalEditCubit>()
+                  //         .updateClinical(ClinicalDataModel(
+                  //           bpSystolic:
+                  //               int.tryParse(systolicBloodPressureCtrl.text),
+                  //           bpDiastolic:
+                  //               int.tryParse(diastolicBloodPressureCtrl.text),
+                  //           respiratoryRate:
+                  //               int.tryParse(respiratoryRateCtrl.text),
+                  //           bloodOxygenLevel:
+                  //               int.tryParse(bloodOxygenLevelCtrl.text),
+                  //           pulseRate: int.tryParse(pulseRateCtrl.text),
+                  //           isCriticalCondition:
+                  //               criticalConditionCtrl.text == "true"
+                  //                   ? true
+                  //                   : false,
+                  //         ));
+                  //   },
+                  //   size: Size(0.8.sw, 40.sp),
+                  // ),
+                ],
+              ),
+            ),
+          )),
     );
   }
 
