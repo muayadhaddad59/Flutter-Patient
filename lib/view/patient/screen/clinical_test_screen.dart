@@ -19,7 +19,9 @@ class ClinicalTestScreen extends StatefulWidget {
 }
 
 class ClinicalTestScreenState extends State<ClinicalTestScreen> {
-  final TextEditingController _bloodPressureController =
+  final TextEditingController _systolicBloodPressureCtrl =
+      TextEditingController();
+  final TextEditingController _diastolicBloodPressureCtrl =
       TextEditingController();
   final TextEditingController _respiratoryRateController =
       TextEditingController();
@@ -30,7 +32,8 @@ class ClinicalTestScreenState extends State<ClinicalTestScreen> {
 
   @override
   void dispose() {
-    _bloodPressureController.dispose();
+    _systolicBloodPressureCtrl.dispose();
+    _diastolicBloodPressureCtrl.dispose();
     _respiratoryRateController.dispose();
     _bloodOxygenController.dispose();
     _heartRateController.dispose();
@@ -51,8 +54,11 @@ class ClinicalTestScreenState extends State<ClinicalTestScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildTextField("Blood Pressure", "Systolic/Diastolic mm Hg",
-                    _bloodPressureController),
+                _buildTextField("Blood Pressure Systolic", "Systolic mm Hg",
+                    _systolicBloodPressureCtrl),
+                    const SizedBox(height: 10),
+                _buildTextField("Blood Pressure Diastolic", "Diastolic mm Hg",
+                    _diastolicBloodPressureCtrl),
                 const SizedBox(height: 10),
                 _buildTextField("Respiratory Rate", "Breaths per Minute",
                     _respiratoryRateController),
@@ -97,9 +103,9 @@ class ClinicalTestScreenState extends State<ClinicalTestScreen> {
                                 int.parse(_bloodOxygenController.text),
                             clinicStaff: _attendingStaffController.text,
                             bpDiastolic:
-                                int.parse(_bloodPressureController.text),
+                                int.parse(_diastolicBloodPressureCtrl.text),
                             bpSystolic:
-                                int.parse(_bloodPressureController.text));
+                                int.parse(_systolicBloodPressureCtrl.text));
                         context.read<ClinicalEditCubit>().addClinical(model);
                       }),
                 ),

@@ -47,12 +47,13 @@ class _ClinicalDetailsInfoState extends State<ClinicalDetailsInfo> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  _buildDetailItem("Blood Oxygen Level", bloodOxygenLevelCtrl),
+                  
                   _buildDetailItem(
                       "Systolic Blood Pressure", systolicBloodPressureCtrl),
                   _buildDetailItem(
                       "Diastolic Blood Pressure", diastolicBloodPressureCtrl),
                   _buildDetailItem("Respiratory Rate", respiratoryRateCtrl),
+                  _buildDetailItem("Blood Oxygen Level", bloodOxygenLevelCtrl),
                   _buildDetailItem("Pulse Rate", pulseRateCtrl),
 
                   const SizedBox(height: 50), // Use SizedBox for spacing

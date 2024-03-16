@@ -5,8 +5,11 @@ import 'package:iconly/iconly.dart';
 import 'package:patient/core/utils/app_colors.dart';
 import 'package:patient/core/utils/app_service.dart';
 import 'package:patient/provider/clinicalCubit/clinical/clinical_cubit.dart';
+import 'package:patient/provider/patinetcubit/patient/patient_cubit.dart';
 import 'package:patient/view/home/screen/home_screen.dart';
 import 'package:patient/view/patient/screen/citical_list_screen.dart';
+import 'package:patient/view/patient/screen/list_patient_screen.dart';
+import 'package:patient/view/patient/screen/patinet_info_screen.dart';
 
 enum _SelectedTab { home, favorite, add, search }
 
@@ -19,17 +22,31 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   var _selectedTab = _SelectedTab.home;
+  var _currentIndex = 0;
   final _screens = [
-    const HomeScreen(),
+    const HomeScreen(), // home screen
     BlocProvider(
+      // Critical
       create: (context) => sl<ClinicalCubit>()..getListCritical(),
       child: const CriticalList(),
     ),
+    const AddPatientScreen(), // placeholder for add patient
+    BlocProvider(
+      create: (context) => sl<PatientCubit>()..getPatient(),
+      child: const ListPatientScreen(),
+    ) // placeholder for list all patient
   ];
 
   void _handleIndexChanged(int i) {
     setState(() {
-      _selectedTab = _SelectedTab.values[i];
+      if (_currentIndex != i) {
+        _currentIndex = i;
+        // Pop screens until only one screen
+        while (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        _selectedTab = _SelectedTab.values[i];
+      }
     });
   }
 
